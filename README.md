@@ -12,6 +12,7 @@ $ apt-get install sudo
 
 ### Create a user with sudo right
 ```bash
+$ adduser YOUR_USER_NAME
 $ adduser YOUR_USER_NAME sudo
 ```
 
@@ -44,7 +45,7 @@ Copy the `firewall.sh` content in the file
 ```bash
 $ chmod +x /etc/init.d/firewall
 ```
-* Lauch it
+* Launch it
 ```bash
 $ /etc/init.d/firewall
 ```
