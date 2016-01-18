@@ -138,10 +138,14 @@ $ ./configure --prefix=~/.local
 $ make
 $ make install
 ```
-* Add some symbolic link and path
+* Add some symbolic for node modules
 ```bash
 $ ln -s ~/.local/lib/node_modules ~/.node_modules
-$ export PATH=$HOME/.local/bin:$PATH
+```
+* Add node bin to your PATH
+Add this to the .profile
+```bash
+export PATH=$HOME/.local/bin:$PATH
 ```
 * Check if everything is ok
 ```bash
@@ -156,6 +160,14 @@ $ rm /home/nodejs/v0.10.29.tar.gz
 * Now for using node, connect as nodejs user !
 
 ## Install pm2, to run your node app
+* Log as your node user
+```bash
+$ sudo su nodejs
+```
+* Install pm2
+```bash
+$ npm install -g nodejs
+```
 
 ## Install and configure mongo 
 ### Install and start
