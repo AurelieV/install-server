@@ -88,6 +88,9 @@ TO DO
 ### For the next connection
 Now, always connect with the user you create
 
+### Only authorize this user to connect ?
+TODO
+
 ## Install node
 Connect via ssh to your server, using the user you create (and not root). Care about precising the ssh port you define
 ```bash
@@ -95,6 +98,7 @@ $ ssh my_user@mon_ip -p 2222
 ```
 
 ### Create a user for node (better for isolate node process) and connect with it
+
 ```bash
 $ sudo useradd nodejs
 $ sudo su nodejs
@@ -111,14 +115,19 @@ $ vi ~/.npmrc
 ```
 
 ### Download and install node
+* Install necessary librairy
+```bash
+$ sudo apt-get install -y gcc g++ python clang make
+```
+
 * Go to node download page, and find the download link to the version you want. 
 ```bash
-$ wget https://github.com/joyent/node/archive/v0.10.29.tar.gz
+$ wget https://nodejs.org/dist/v4.2.4/node-v4.2.4.tar.gz
 ```
 * Unzip the files and go to directory
 ```bash
-$ tar -xzvf ~/v0.10.29.tar.gz
-$ cd ~/node-0.10.29
+$ tar -xzvf node-v4.2.4.tar.gz
+$ cd ~/node-v4.2.4
 ```
 * Configure the build
 ```bash
