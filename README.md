@@ -158,8 +158,85 @@ $ rm /home/nodejs/v0.10.29.tar.gz
 ## Install pm2, to run your node app
 
 ## Install and configure mongo 
-### Install
-It really depend of the version on your server. These instructions are specific for Ubuntu 15.04
+### Install and start
+It really depend of the version on your server. These instructions are specific for Ubuntu 15.04.
+
+There is some compatibily problem with Ubuntu 15.04, here is a [link to a solution](https://jira.mongodb.org/browse/SERVER-17742), which consist
+of (install the debian version)[https://docs.mongodb.org/manual/tutorial/install-mongodb-on-debian/].
+
+```bash
+$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
+$ echo "deb http://repo.mongodb.org/apt/debian wheezy/mongodb-org/3.2 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
+$ sudo apt-get update
+$ sudo apt-get install -y mongodb-org
+$ sudo service mongod start
+```
+
+### Enable authentication on your database
+* Create an admin user
+```bash
+$ mongo
+>
+use admin
+db.createUser(
+  {
+    user: "myUserAdmin",
+    pwd: "abc123",
+    roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
+  }
+)
+```
+* Change the configuration for use authentication
+```bash
+$ sudo vi /etc/mongod.conf
+```
+Add these lines
+```
+security:
+  authorization: enabled
+```
+* Restart mongo
+```bash
+$ sudo service mongod restart
+```
+* Check if it's ok.
+```bash
+$ mongo
+> db.getUsers()
+```
+You will see an error.
+```bash
+$ mongo -u "myUserAdmin" --authenticationDatabase "admin" -p
+> db.getUsers()
+```
+Everything ok
+
+### Enable authentication on your database
+* Create a database for your application
+```bash
+$ mongo -u "myUserAdmin" --authenticationDatabase "admin" -p
+> use myApplicationDB
+```
+* Create a user with the good right (read, readWrite, or write)
+```bash
+>
+db.createUser(
+    {
+      user: "myAppUser",
+      pwd: "secretPWD",
+      roles: [
+         { role: "readWrite", db: "myApplicationDB" }
+      ]
+    }
+)
+```
+
+## Install and configure nginx for proxy your node app
+Nginx is a good solution to redirect all http port 
+### Add a proxy to redirect 80 to your app
+to do
+### Https consideration
+to do
 
 
 
