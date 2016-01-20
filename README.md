@@ -91,6 +91,14 @@ Now, always connect with the user you create
 ### Only authorize this user to connect ?
 TODO
 
+### Add ssh key ?
+TODO
+
+### Install git
+```bash
+$ sudo apt-get install git
+```
+
 ## Install node
 Connect via ssh to your server, using the user you create (and not root). Care about precising the ssh port you define
 ```bash
@@ -143,7 +151,7 @@ $ make install
 $ ln -s ~/.local/lib/node_modules ~/.node_modules
 ```
 * Add node bin to your PATH
-Add this to the .profile
+Add this to the .bashrc
 ```bash
 export PATH=$HOME/.local/bin:$PATH
 ```
@@ -159,15 +167,51 @@ $ rm /home/nodejs/v0.10.29.tar.gz
 ```
 * Now for using node, connect as nodejs user !
 
-## Install pm2, to run your node app
+## Install and configure nginx for proxy your node app
+Nginx is a good solution to redirect all http port 
+### Install nginx
+```bash
+$ sudo apt-get install nginx
+```
+### Add a proxy to redirect 80 to your app
+* Add my-nginx.conf of this repo to your `/etc/nginx/site-available` folder, and add a symlink in `/etc/nginx/site-enabled` folder.
+
+Change the domain name and the port.
+```bash
+$ sudo ln -s /etc/nginx/sites-available/my-nginx.conf /etc/nginx/sites-enabled
+```
+* Remove default config
+```bash
+$ sudo rm /etc/nginx/sites-enabled/default
+```
+* Restart nginx
+```bash
+$ sudo service nginx reload
+```
+
+### Https consideration
+to do
+
+## Install pm2, to run your node app 
 * Log as your node user
 ```bash
 $ sudo su nodejs
 ```
 * Install pm2
 ```bash
-$ npm install -g nodejs
+$ npm install -g pm2
 ```
+* Add pm2 to boot script
+```bash
+$ pm2 startup
+```
+And execute the script prompted (with a sudo user)
+* (Optional) Use keymetrics
+Go to [Keymetrics](https://app.keymetrics.io/), create an account, and in your server, tap the command provided to enable access to your server.
+
+You can now install lot of plugins ! Personnaly I install logrotate, server monitoring, and mongo modules for example. You can install it directly by command lines in your server, or by clicking on the keymetrics site
+
+/!\ You need to have open certain port, see keymetrics recommandations, and configure your firewall (already done for my file, but may be the port is different)
 
 ## Install and configure mongo 
 ### Install and start
@@ -242,13 +286,6 @@ db.createUser(
     }
 )
 ```
-
-## Install and configure nginx for proxy your node app
-Nginx is a good solution to redirect all http port 
-### Add a proxy to redirect 80 to your app
-to do
-### Https consideration
-to do
 
 
 

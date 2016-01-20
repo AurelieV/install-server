@@ -43,6 +43,10 @@ sudo iptables -t filter -A INPUT -p udp --dport 53 -j ACCEPT
 sudo iptables -t filter -A OUTPUT -p tcp --dport 80 -j ACCEPT
 sudo iptables -t filter -A INPUT -p tcp --dport 80 -j ACCEPT
 
+# HTTPS
+sudo iptables -t filter -A OUTPUT -p tcp --dport 443 -j ACCEPT
+sudo iptables -t filter -A INPUT -p tcp --dport 443 -j ACCEPT
+
 # FTP
 sudo iptables -t filter -A OUTPUT -p tcp --dport 20:21 -j ACCEPT
 sudo iptables -t filter -A INPUT -p tcp --dport 20:21 -j ACCEPT
@@ -74,3 +78,8 @@ iptables -A FORWARD -p tcp --tcp-flags SYN,ACK,FIN,RST RST -m limit --limit 1/s 
 iptables -A OUTPUT -o eth0 -p tcp --dport 9418 -m state --state NEW,ESTABLISHED -j ACCEPT
 iptables -A OUTPUT -o eth0 -p tcp --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
 iptables -A INPUT -i eth0 -p tcp --sport 9418 -m state --state ESTABLISHED -j ACCEPT
+
+# For keymetrics
+iptables -t filter -A INPUT -p tcp --dport 43554 -j ACCEPT
+iptables -t filter -A OUTPUT -p tcp --dport 43554 -j ACCEPT
+
