@@ -92,7 +92,14 @@ Now, always connect with the user you create
 TODO
 
 ### Add ssh key ?
-TODO
+* Generate a ssk_key if you have not one
+```bash
+$ ssh-keygen -t dsa
+```
+* Add the key to your server (replace the path)
+```bash
+$ ssh-copy-id -i ~/.ssh/your_key.pub user@machine -p 2222
+```
 
 ### Install git
 ```bash
