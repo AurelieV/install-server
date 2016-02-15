@@ -29,6 +29,7 @@ $ vi /etc/ssh/sshd_config
 ```bash
 $ /etc/init.d/ssh restart
 ```
+/!\ After changing the `Port` value you will have to precise the port you define to connect via ssh.
 
 ### Simple firewall configuration
 We will use iptable for this.
@@ -36,7 +37,7 @@ We will use iptable for this.
 $ apt-get install iptables
 $ vi /etc/init.d/firewall
 ```
-Copy the `firewall.sh` content in the file
+Copy from my repo the `firewall.sh` content in the new file
 
 * By default we close all ports, and reopen only necessary ones.
 * /!\/!\ Think about changing the ssh port number in the file from the one you choose in previous step (line 33-34)
